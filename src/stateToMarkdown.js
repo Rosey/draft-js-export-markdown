@@ -7,6 +7,11 @@ import {
   INLINE_STYLE,
 } from 'draft-js-utils';
 import {Entity} from 'draft-js';
+import {
+  encodeContent,
+  encodeURL,
+  escapeTitle,
+} from './utilities';
 
 import type {ContentState, ContentBlock} from 'draft-js';
 
@@ -246,21 +251,6 @@ function canHaveDepth(blockType: any): boolean {
     default:
       return false;
   }
-}
-
-function encodeContent(text) {
-  return text.replace(/[*_`]/g, '\\$&');
-}
-
-// Encode chars that would normally be allowed in a URL but would conflict with
-// our markdown syntax: `[foo](http://foo/)`
-function encodeURL(url) {
-  return url.replace(/\)/g, '%29');
-}
-
-// Escape quotes using backslash.
-function escapeTitle(text) {
-  return text.replace(/"/g, '\\"');
 }
 
 export default function stateToMarkdown(content: ContentState): string {
